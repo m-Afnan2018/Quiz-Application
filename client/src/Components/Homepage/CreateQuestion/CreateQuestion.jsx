@@ -8,12 +8,13 @@ import Vector from "./Vector.png";
 
 const CreateQuestion = () => {
   const { quizId } = useParams();
-  console.log("create quetioin id",quizId)
+  // console.log("create quetioin id",quizId)
   const location = useLocation();
   const [quiz, setQuiz] = useState({ name: "", type: "" });
   const [questions, setQuestions] = useState([
     {
       Question: "",
+      optionType: 'text',
       options: [
         { text: "", imageUrl: "" },
         { text: "", imageUrl: "" },
@@ -98,7 +99,7 @@ const CreateQuestion = () => {
   };
 
   const closePopup = () => {
-    navigate("/homepage");
+    navigate("/dashboard");
   };
 
   const handlePollQuestionChange = (index, value) => {
@@ -136,6 +137,7 @@ const CreateQuestion = () => {
   };
 
   const addQuestion = () => {
+    console.log(questions);
     if (questions.length < 5) {
       setQuestions([
         ...questions,
@@ -149,6 +151,7 @@ const CreateQuestion = () => {
           timer: timer, // Set the timer based on current state
         },
       ]);
+      setCurrentQuestionIndex(currentQuestionIndex+1);
     } else {
       toast.error("Cannot add more than 5 questions.");
     }
@@ -269,6 +272,7 @@ const CreateQuestion = () => {
 
   const handleOptionTypeChange = (event) => {
     setOptionType(event.target.value);
+    questions[currentQuestionIndex].optionType = event.target.value;
   };
 
   const handleTimerChange = (time) => {
@@ -281,6 +285,7 @@ const CreateQuestion = () => {
 
   const goToQuestion = (index) => {
     setCurrentQuestionIndex(index);
+    setOptionType(questions[index].optionType);
   };
 
   const handleCorrectAnswerChange = (questionIndex, optionIndex) => {

@@ -1,4 +1,5 @@
 // controllers/quizController.js
+const { Question } = require("../models/Question");
 const Quiz = require("../models/Quiz");
 const mongoose = require("mongoose");
 exports.createQuiz = async (req, res) => {
@@ -11,6 +12,7 @@ exports.createQuiz = async (req, res) => {
       name,
       type,
       creator: userId,
+      questions: [],
     });
 
     await newQuiz.save();
@@ -47,7 +49,7 @@ exports.addQuestionToQuiz = async (req, res) => {
     }
 
     // Loop through each question in the array and add to the quiz
-    questions.forEach((question) => {
+    const questionPromises = questions.map(async (question) => {
       const newQuestion = {
         Question: question.Question,
         options: question.options,
@@ -56,8 +58,14 @@ exports.addQuestionToQuiz = async (req, res) => {
         quizType: question.quizType,
         timer: question.quizType === "Q&A" ? question.timer : "OFF",
       };
-
-      quiz.questions.push(newQuestion);
+    
+      return await Question.create(newQuestion);
+    });
+    
+    const savedQuestions = await Promise.all(questionPromises);
+    
+    savedQuestions.forEach((savedQuestion) => {
+      quiz.questions.push(savedQuestion._id);
     });
 
     await quiz.save();
@@ -77,11 +85,15 @@ exports.getQuizQuestions = async (req, res) => {
     console.log("Request query:", req.query); // Log query parameters
     const { quizId } = req.params;
 
-    const quiz = await Quiz.findById(quizId);
+    const quiz = await Quiz.findById(quizId).populate({
+      path: 'questions',
+    });
 
     if (!quiz) {
       return res.status(404).json({ message: "Quiz not found" });
     }
+
+    console.log(quiz);
 
     if (!Array.isArray(quiz.questions)) {
       console.error("Quiz questions are not an array:", quiz.questions);

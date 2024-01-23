@@ -23,10 +23,10 @@ const quizSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User', // Replace 'User' with the name of 
   },
-  questions: {
+  questions: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Question'
-  }
+  }]
   // questions: [questionSchema],
 });
 
