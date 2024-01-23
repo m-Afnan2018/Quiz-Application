@@ -1,0 +1,77 @@
+.quiz-form-container {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: 590px;
+  height: 364px;
+  box-sizing: border-box;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  padding-top: 100px;
+}
+/* Input field styles */
+.quiz-name-input {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 13px;
+  width: 100%;
+  font-size: 16px;
+  margin-bottom: 20px; /* Adjust as per the alignment needs */
+  box-sizing: border-box;
+}
+
+/* Label and radio button on the same line */
+.form-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  font-size: 16px;
+}
+
+/* Styling for each label containing radio buttons */
+.form-group label {
+  margin: 0;
+}
+
+/* Radio button styling */
+.form-group input[type="radio"] {
+  margin-right: 5px;
+}
+
+/* Button container */
+.form-actions {
+  display: flex;
+  justify-content: space-around;
+}
+.continue-button,.can-btn {
+  border: none;
+  padding: 15px 60px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-top: 30px;
+  font-size: 16px;
+  width: auto;
+  background-color: #4caf50;
+  color: white;
+}
+.can-btn {
+background-color: rgba(0, 0, 0, 0.496);
+}
+
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent overlay */
+  backdrop-filter: blur(5px); /* This creates the blur effect */
+}

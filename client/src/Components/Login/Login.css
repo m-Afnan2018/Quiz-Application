@@ -1,0 +1,35 @@
+.login-form {
+  max-width: 300px;
+  margin: auto;
+  margin-top: 50px;
+}
+
+.input {
+  border: 1px solid #ced4da;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+  width: calc(100% - 22px);
+}
+
+.error-text{
+  border: 1px solid #FF5A5F;
+  color: red;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+  width: calc(100% - 22px);
+}
+.error-text::placeholder{
+  color: red;
+}
+
+.submit-button {
+  background-color: #0071E3;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  padding: 10px 15px;
+  cursor: pointer;
+  width: 100%;
+}
