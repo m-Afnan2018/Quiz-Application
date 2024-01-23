@@ -331,7 +331,7 @@ const QuizQuestions = () => {
                 </div>
               </div>
               <div className="question-text">
-                {questions[currentQuestionIndex].question}
+                {questions[currentQuestionIndex].Question}
               </div>
               <div className="options-container">
                 {renderOptions(
