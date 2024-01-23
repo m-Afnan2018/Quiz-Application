@@ -9,7 +9,7 @@ const Dashboard = () => {
   const [trendingQuizzes, setTrendingQuizzes] = useState([]);
 
   const { quizId } = useParams();
- console.log(quizId)
+ // console.log(quizId)
   // Function to fetch data from the backend
   const fetchData = async () => {
     const token = localStorage.getItem("token");
@@ -23,23 +23,28 @@ const Dashboard = () => {
     try {
       const quizzesUrl = `http://localhost:5000/api/quizzes/user/${userId}/quizzes`;
       // const questionsUrl = `http://localhost:5000/api/quizzes/${quizId}/questions`;
-      const questionsUrl = `http://localhost:5000/api/questions/`;
+      const questionsUrl = `http://localhost:5000/api/quizzes/user/${userId}/quizzes/question`;
       const trendingUrl = `http://localhost:5000/api/quizzes/user/${userId}/trending`;
+      const impressionUrl = `http://localhost:5000/api/quizzes/users/${userId}/total/impression`;
 
       // Fetch quizzes, questions, and trending quizzes in parallel
-      const [quizRes, questionRes, trendingRes] = await Promise.all([
+      const [quizRes, questionRes, trendingRes, impressionRes] = await Promise.all([
         fetch(quizzesUrl, { headers: authHeaders }),
         fetch(questionsUrl, { headers: authHeaders }),
         fetch(trendingUrl, { headers: authHeaders }),
+        fetch(impressionUrl, { headers: authHeaders }),
       ]);
 
       // Process quizzes response
       const quizData = await quizRes.json();
       setCreatedQuizzes(quizData.length || 0);
 
+      const impressionData = await impressionRes.json();
+      setTotalImpressions(impressionData.totalImpressions)
+
       // Process questions response
       const questionsData = await questionRes.json();
-      console.log('Question Data: ', questionsData);
+      // console.log('Question Data: ', questionsData);
       setCreatedQuestions(questionsData.length);
 
       // Process trending quizzes response
@@ -57,10 +62,11 @@ const Dashboard = () => {
     if (!quizId) return; // Exit if no quizId is provided
 
     const quizUrl = `http://localhost:5000/api/quizzes/${quizId}/impression`;
-    console.log("Fetching and incrementing impressions for URL:", quizUrl);
+    // console.log("Fetching and incrementing impressions for URL:", quizUrl);
     try {
       const quizResponse = await fetch(quizUrl); // Removed the auth headers, GET is default method
       const quizData = await quizResponse.json();
+      console.log(quizData);
 
       if (quizData) {
         setTotalImpressions(quizData.impressions || 0);
